@@ -1,7 +1,7 @@
 import random
 import pygame as pg
 
-from constants import width, height, grid_div, v, block_size
+from constants import grid_div, block_size, blocks
 from constants import black, white, green, red
 
 
@@ -11,7 +11,7 @@ class Food:
 
     def spawn(self):
         self.x, self.y = random.randrange(
-            0, 40) * grid_div, random.randrange(0, 40) * grid_div
+            blocks) * grid_div, random.randrange(blocks) * grid_div
 
     def draw(self, win):
         pg.draw.rect(
