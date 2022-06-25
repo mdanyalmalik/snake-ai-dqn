@@ -3,18 +3,18 @@ from pygame.constants import K_a, K_d, K_s, K_w, K_ESCAPE
 import pygame_gui as pg_gui
 
 from snake import Snake
-from constants import width, height, grid_div, size
-from constants import black, white, green, red
+from constants import WIDTH, HEIGHT, GRID_DIV, SIZE
+from constants import BLACK, WHITE
 
 pg.init()
 
 pg.font.init()
 myfont = pg.font.SysFont('Comic Sans MS', 30)
 
-win = pg.display.set_mode(size)
+win = pg.display.set_mode(SIZE)
 pg.display.set_caption('Snake')
 
-manager = pg_gui.UIManager(size, 'theme.json')
+manager = pg_gui.UIManager(SIZE, 'theme.json')
 
 icon = pg.image.load('snake.png')
 pg.display.set_icon(icon)
@@ -23,19 +23,19 @@ clock = pg.time.Clock()
 
 
 def draw_grid():
-    for line in range(width//grid_div+1):
-        pg.draw.line(win, white, (line*grid_div, 0), (line*grid_div, height))
-    for line in range(height//grid_div+1):
-        pg.draw.line(win, white, (0, line*grid_div), (width, line*grid_div))
+    for line in range(WIDTH//GRID_DIV+1):
+        pg.draw.line(win, WHITE, (line*GRID_DIV, 0), (line*GRID_DIV, HEIGHT))
+    for line in range(HEIGHT//GRID_DIV+1):
+        pg.draw.line(win, WHITE, (0, line*GRID_DIV), (WIDTH, line*GRID_DIV))
 
 
-snake1 = Snake(width//2, height//2)
+snake1 = Snake(WIDTH//2, HEIGHT//2)
 
 # drawing menu
-sp_button = pg_gui.elements.UIButton(relative_rect=pg.Rect((width//2-width//10, height//2-height//40), (width//5, height//20)),
+sp_button = pg_gui.elements.UIButton(relative_rect=pg.Rect((WIDTH//2-WIDTH//10, HEIGHT//2-HEIGHT//40), (WIDTH//5, HEIGHT//20)),
                                      text='Single Player',
                                      manager=manager)
-title_text = pg_gui.elements.UILabel(relative_rect=pg.Rect((width//2-width//4, height//3), (width//2, height//10)),
+title_text = pg_gui.elements.UILabel(relative_rect=pg.Rect((WIDTH//2-WIDTH//4, HEIGHT//3), (WIDTH//2, HEIGHT//10)),
                                      text='Snake with Self-Learning AI',
                                      manager=manager)
 
@@ -55,7 +55,7 @@ def menu():
 
             manager.process_events(event)
 
-        win.fill(black)
+        win.fill(BLACK)
 
         manager.update(time_delta)
 
@@ -77,8 +77,8 @@ def single_player():
         if keys[K_ESCAPE]:
             run = False
 
-        win.fill(black)
-        draw_grid()
+        win.fill(BLACK)
+        # draw_grid()
 
         snake1.draw(win=win)
         snake1.move()

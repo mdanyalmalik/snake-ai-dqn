@@ -1,10 +1,10 @@
-black = (0, 0, 0)
-white = (255, 255, 255)
-green = (0, 255, 0)
-red = (255, 0, 0)
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+GREEN = (0, 255, 0)
+RED = (255, 0, 0)
 
-size = width, height = 800, 800
-blocks = 40
-grid_div = size[0]//blocks
-block_size = grid_div
-v = grid_div
+SIZE = WIDTH, HEIGHT = 800, 800
+BLOCKS = 40
+GRID_DIV = WIDTH//BLOCKS
+BLOCK_SIZE = GRID_DIV
+V = GRID_DIV

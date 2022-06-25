@@ -1,8 +1,8 @@
 import random
 import pygame as pg
 
-from constants import grid_div, block_size, blocks
-from constants import black, white, green, red
+from constants import GRID_DIV, BLOCK_SIZE, BLOCKS
+from constants import RED
 
 
 class Food:
@@ -11,11 +11,11 @@ class Food:
 
     def spawn(self):
         self.x, self.y = random.randrange(
-            blocks) * grid_div, random.randrange(blocks) * grid_div
+            BLOCKS) * GRID_DIV, random.randrange(BLOCKS) * GRID_DIV
 
     def draw(self, win):
         pg.draw.rect(
-            win, red, (self.x, self.y, block_size, block_size))
+            win, RED, (self.x, self.y, BLOCK_SIZE, BLOCK_SIZE))
 
     def check_eaten(self, snake):
         head = snake.head_pos()
