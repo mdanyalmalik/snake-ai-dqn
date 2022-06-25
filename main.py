@@ -21,14 +21,6 @@ pg.display.set_icon(icon)
 
 clock = pg.time.Clock()
 
-
-def draw_grid():
-    for line in range(WIDTH//GRID_DIV+1):
-        pg.draw.line(win, WHITE, (line*GRID_DIV, 0), (line*GRID_DIV, HEIGHT))
-    for line in range(HEIGHT//GRID_DIV+1):
-        pg.draw.line(win, WHITE, (0, line*GRID_DIV), (WIDTH, line*GRID_DIV))
-
-
 snake1 = Snake(WIDTH//2, HEIGHT//2)
 
 # drawing menu
@@ -78,7 +70,6 @@ def single_player():
             run = False
 
         win.fill(BLACK)
-        # draw_grid()
 
         snake1.draw(win=win)
         snake1.move()
