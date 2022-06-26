@@ -9,7 +9,7 @@ if __name__ == '__main__':
     win = pg.display.set_mode(SIZE)
     pg.display.set_caption('Snake')
 
-    icon = pg.image.load('snake.png')
+    icon = pg.image.load('res/snake.png')
     pg.display.set_icon(icon)
 
     main_menu(win)
