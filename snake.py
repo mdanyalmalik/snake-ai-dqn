@@ -51,7 +51,7 @@ class Snake:
 
     def draw_score(self, win, font):
         self.score_render = font.render(str(self.score), False, WHITE)
-        win.blit(self.score_render, (WIDTH-60, 0))
+        win.blit(self.score_render, (WIDTH-40, 0))
 
     def food_draw(self, win):
         self.food.draw(win=win)

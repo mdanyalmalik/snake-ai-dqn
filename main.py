@@ -9,7 +9,7 @@ from constants import BLACK, WHITE
 pg.init()
 
 pg.font.init()
-myfont = pg.font.SysFont('Comic Sans MS', 30)
+myfont = pg.font.SysFont('Times New Roman', 30)
 
 win = pg.display.set_mode(SIZE)
 pg.display.set_caption('Snake')
@@ -32,7 +32,7 @@ title_text = pg_gui.elements.UILabel(relative_rect=pg.Rect((WIDTH//2-WIDTH//4, H
                                      manager=manager)
 
 
-def menu():
+def menu(win):
     run = True
 
     while run:
@@ -43,7 +43,7 @@ def menu():
                 quit()
             elif event.type == pg_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == sp_button:
-                    single_player()
+                    single_player(win)
 
             manager.process_events(event)
 
@@ -56,7 +56,7 @@ def menu():
         pg.display.update()
 
 
-def single_player():
+def single_player(win):
     run = True
 
     while run:
@@ -82,4 +82,4 @@ def single_player():
         pg.display.update()
 
 
-menu()
+menu(win)
