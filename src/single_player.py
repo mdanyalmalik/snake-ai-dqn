@@ -1,5 +1,5 @@
 import pygame as pg
-from pygame.constants import K_a, K_d, K_s, K_w, K_ESCAPE
+from pygame.constants import K_ESCAPE
 
 from snake import Snake
 from constants import WIDTH, HEIGHT
