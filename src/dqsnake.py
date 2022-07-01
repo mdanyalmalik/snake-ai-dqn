@@ -30,23 +30,24 @@ class DQSnake(Snake):
     def check_collision(self, point=None):
         head = self.head_pos()
         reward = 0
+        game_over = False
 
         if point is None:
             point = head
 
         if point in self.positions[2:]:
             reward = -10
-            self.reset()
+            game_over = True
 
         if point[0] >= WIDTH or point[0] < 0 or point[1] >= HEIGHT or point[1] < 0:
             reward = -10
-            self.reset()
+            game_over = True
 
         if self.frame_iteration > 100 * len(self.positions):
             reward = -10
-            self.reset()
+            game_over = True
 
-        return reward
+        return reward, game_over
 
     def food_check_eaten(self):
         reward = 0
