@@ -1,14 +1,16 @@
 from collections import deque
-from selectors import EpollSelector
 import numpy as np
 import random
+from sklearn.metrics import SCORERS
 import torch
 import pygame as pg
 from pygame.constants import K_ESCAPE
 
 from dqsnake import DQSnake
-from constants import SIZE, BLOCK_SIZE, V
+from constants import SIZE, BLOCK_SIZE, V, WIDTH, HEIGHT
 from constants import BLACK
+from model import Linear_QNet, QTrainer
+from plot import plot
 
 MAX_MEMORY = 100_000
 BATCH_SIZE = 1000
@@ -25,8 +27,8 @@ class Agent:
         self.epsilon = 0  # randomness
         self.gamma = 0  # discount rate
         self.memory = deque(maxlen=MAX_MEMORY)
-        self.model = None
-        self.trainer = None
+        self.model = Linear_QNet(12, 256, 4)
+        self.trainer = QTrainer(self.model, lr=LR, gamma=self.gamma)
 
     def get_state(self, snake):
         head = snake.head_pos()
@@ -51,10 +53,10 @@ class Agent:
         ]
 
         state = [
-            snake.check_collision(point_u),
-            snake.check_collision(point_d),
-            snake.check_collision(point_l),
-            snake.check_collision(point_r),
+            snake.check_collision(point_u)[1],
+            snake.check_collision(point_d)[1],
+            snake.check_collision(point_l)[1],
+            snake.check_collision(point_r)[1],
 
             direction[0],
             direction[1],
@@ -93,7 +95,7 @@ class Agent:
             final_move[move] = 1
         else:
             state0 = torch.tensor(state, dtype=torch.float)
-            prediction = self.model.predict(state0)
+            prediction = self.model(state0)
             move = torch.argmax(prediction)
             final_move[move] = 1
 
@@ -105,7 +107,7 @@ def train(win):
     record = 0
 
     agent = Agent()
-    snake = DQSnake()
+    snake = DQSnake(WIDTH//2, HEIGHT//2)
 
     run = True
 
@@ -121,9 +123,12 @@ def train(win):
 
         win.fill(BLACK)
 
-        state_old = agent.get_state()
+        state_old = agent.get_state(snake)
 
         final_move = agent.get_action(state_old)
+
+        final_move = [0, 0, 0, 0]
+        final_move[random.randint(0, 3)] = 1
 
         reward = 0
         snake.move(final_move)
@@ -140,22 +145,27 @@ def train(win):
         agent.remember(state_old, final_move, reward, state_new, game_over)
 
         if game_over:
-            snake.reset()
             agent.n_games += 1
             agent.train_long_memory()
 
             if snake.score > record:
                 record = snake.score
-                # save model
+                agent.model.save()
 
             print('Game', agent.n_games, 'Score',
                   snake.score, 'Record', record)
+            plot_scores.append(snake.score)
+            total_score += snake.score
+            mean_score = total_score / agent.n_games
+            plot_mean_scores.append(mean_score)
+            plot(plot_scores, plot_mean_scores)
+            snake.reset()
 
         snake.draw(win=win)
         snake.draw_score(win=win, font=myfont)
         snake.food_draw(win=win)
 
-        pg.time.delay(50)
+        # pg.time.delay(25)
         pg.display.update()
 
 
