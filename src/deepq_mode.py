@@ -10,7 +10,6 @@ from dqsnake import DQSnake
 from constants import SIZE, BLOCK_SIZE, V, WIDTH, HEIGHT
 from constants import BLACK
 from model import Linear_QNet, QTrainer
-from plot import plot
 
 MAX_MEMORY = 100_000
 BATCH_SIZE = 1000
@@ -25,7 +24,7 @@ class Agent:
     def __init__(self):
         self.n_games = 0
         self.epsilon = 0  # randomness
-        self.gamma = 0  # discount rate
+        self.gamma = 0.9  # discount rate
         self.memory = deque(maxlen=MAX_MEMORY)
         self.model = Linear_QNet(12, 256, 4)
         self.trainer = QTrainer(self.model, lr=LR, gamma=self.gamma)
@@ -88,7 +87,7 @@ class Agent:
         self.trainer.train_step(state, action, reward, next_state, game_over)
 
     def get_action(self, state):
-        self.epsilon = 80 - self.n_games
+        self.epsilon = 200 - self.n_games
         final_move = [0, 0, 0, 0]
         if random.randint(0, 200) < self.epsilon:
             move = random.randint(0, 3)
@@ -101,8 +100,6 @@ class Agent:
 
 
 def train(win):
-    plot_scores = []
-    plot_mean_scores = []
     total_score = 0
     record = 0
 
@@ -145,27 +142,24 @@ def train(win):
         agent.remember(state_old, final_move, reward, state_new, game_over)
 
         if game_over:
+            score = snake.score
+            snake.reset()
             agent.n_games += 1
             agent.train_long_memory()
 
-            if snake.score > record:
-                record = snake.score
+            if score > record:
+                record = score
                 agent.model.save()
 
             print('Game', agent.n_games, 'Score',
-                  snake.score, 'Record', record)
-            plot_scores.append(snake.score)
-            total_score += snake.score
-            mean_score = total_score / agent.n_games
-            plot_mean_scores.append(mean_score)
-            plot(plot_scores, plot_mean_scores)
-            snake.reset()
+                  score, 'Record', record)
+            total_score += score
 
         snake.draw(win=win)
         snake.draw_score(win=win, font=myfont)
         snake.food_draw(win=win)
 
-        # pg.time.delay(25)
+        # pg.time.delay(15)
         pg.display.update()
 
 
