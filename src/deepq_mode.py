@@ -148,7 +148,7 @@ def train(win):
 
             if score > record:
                 record = score
-                agent.model.save(filename=f'{record}_{time.time()}_model.pth')
+                agent.model.save(file_name=f'{record}_{time.time()}_model.pth')
 
         snake.draw(win=win)
         snake.draw_score(win=win, font=myfont,
