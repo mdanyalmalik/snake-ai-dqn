@@ -14,7 +14,7 @@ sp_button = pg_gui.elements.UIButton(relative_rect=pg.Rect((WIDTH//2-WIDTH//10, 
                                      text='Single Player',
                                      manager=manager)
 dqm_button = pg_gui.elements.UIButton(relative_rect=pg.Rect((WIDTH//2-WIDTH//10, HEIGHT//2+HEIGHT//40), (WIDTH//5, HEIGHT//20)),
-                                      text='Training Mode',
+                                      text='AI Mode',
                                       manager=manager)
 title_text = pg_gui.elements.UILabel(relative_rect=pg.Rect((WIDTH//2-WIDTH//4, HEIGHT//3), (WIDTH//2, HEIGHT//10)),
                                      text='Snake with Self-Learning AI',
