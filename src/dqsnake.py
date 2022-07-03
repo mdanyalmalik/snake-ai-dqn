@@ -44,7 +44,7 @@ class DQSnake(Snake):
             game_over = True
 
         if self.frame_iteration > 100 * len(self.positions):
-            reward = -10
+            reward = -20
             game_over = True
 
         return reward, game_over

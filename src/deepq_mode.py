@@ -4,10 +4,9 @@ import random
 import torch
 import pygame as pg
 from pygame.constants import K_ESCAPE
-import time
 
 from dqsnake import DQSnake
-from constants import SIZE, BLOCK_SIZE, V, WIDTH, HEIGHT
+from constants import BLOCK_SIZE, V, WIDTH, HEIGHT
 from constants import BLACK
 from model import Linear_QNet, QTrainer
 
@@ -126,6 +125,7 @@ def train(win):
         final_move = agent.get_action(state_old)
 
         snake.move(final_move)
+        snake.frame_iteration += 1
 
         reward = 0
         r1, game_over = snake.check_collision()
@@ -148,7 +148,7 @@ def train(win):
 
             if score > record:
                 record = score
-                agent.model.save(file_name=f'{record}_{time.time()}_model.pth')
+                agent.model.save(score=score)
 
         snake.draw(win=win)
         snake.draw_score(win=win, font=myfont,
@@ -157,9 +157,3 @@ def train(win):
 
         # pg.time.delay(10)
         pg.display.update()
-
-
-win = pg.display.set_mode(SIZE)
-
-if __name__ == '__main__':
-    train(win)

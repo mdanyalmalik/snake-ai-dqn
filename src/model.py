@@ -3,7 +3,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 import os
-import time
+import shutil
+import numpy as np
 
 
 class Linear_QNet(nn.Module):
@@ -18,13 +19,25 @@ class Linear_QNet(nn.Module):
         x = self.fc2(x)
         return x
 
-    def save(self, file_name='model.pth'):
+    def save(self, score):
+        file_name = f'{score}.pth'
         model_folder_path = '../models'
+
         if not os.path.exists(model_folder_path):
             os.makedirs(model_folder_path)
 
-        file_name = os.path.join(model_folder_path, file_name)
-        torch.save(self.state_dict(), file_name)
+        try:
+            models = os.listdir(model_folder_path)
+            models = [int(x[:-4]) for x in models]
+
+            if score >= max(models):
+                shutil.rmtree(model_folder_path)
+                os.makedirs(model_folder_path)
+                file_name = os.path.join(model_folder_path, file_name)
+                torch.save(self.state_dict(), file_name)
+        except:
+            file_name = os.path.join(model_folder_path, file_name)
+            torch.save(self.state_dict(), file_name)
 
 
 class QTrainer:
@@ -36,10 +49,10 @@ class QTrainer:
         self.criterion = nn.MSELoss()
 
     def train_step(self, state, action, reward, next_state, game_over):
-        state = torch.tensor(state, dtype=torch.float)
-        next_state = torch.tensor(next_state, dtype=torch.float)
-        action = torch.tensor(action, dtype=torch.float)
-        reward = torch.tensor(reward, dtype=torch.float)
+        state = torch.tensor(np.array(state), dtype=torch.float)
+        next_state = torch.tensor(np.array(next_state), dtype=torch.float)
+        action = torch.tensor(np.array(action), dtype=torch.float)
+        reward = torch.tensor(np.array(reward), dtype=torch.float)
 
         if len(state.shape) == 1:
             state = torch.unsqueeze(state, 0)

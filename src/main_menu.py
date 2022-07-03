@@ -4,6 +4,7 @@ import pygame_gui as pg_gui
 from constants import SIZE, WIDTH, HEIGHT
 from constants import BLACK
 from single_player import single_player
+from deepq_mode import train
 
 clock = pg.time.Clock()
 manager = pg_gui.UIManager(SIZE, '../res/theme.json')
@@ -12,6 +13,9 @@ manager = pg_gui.UIManager(SIZE, '../res/theme.json')
 sp_button = pg_gui.elements.UIButton(relative_rect=pg.Rect((WIDTH//2-WIDTH//10, HEIGHT//2-HEIGHT//40), (WIDTH//5, HEIGHT//20)),
                                      text='Single Player',
                                      manager=manager)
+dqm_button = pg_gui.elements.UIButton(relative_rect=pg.Rect((WIDTH//2-WIDTH//10, HEIGHT//2+HEIGHT//40), (WIDTH//5, HEIGHT//20)),
+                                      text='Training Mode',
+                                      manager=manager)
 title_text = pg_gui.elements.UILabel(relative_rect=pg.Rect((WIDTH//2-WIDTH//4, HEIGHT//3), (WIDTH//2, HEIGHT//10)),
                                      text='Snake with Self-Learning AI',
                                      manager=manager)
@@ -29,6 +33,8 @@ def main_menu(win):
             elif event.type == pg_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == sp_button:
                     single_player(win)
+                elif event.ui_element == dqm_button:
+                    train(win)
 
             manager.process_events(event)
 
