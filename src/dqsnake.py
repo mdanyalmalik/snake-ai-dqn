@@ -36,15 +36,15 @@ class DQSnake(Snake):
             point = head
 
         if point in self.positions[2:]:
-            reward = -10
+            reward = -100
             game_over = True
 
         if point[0] >= WIDTH or point[0] < 0 or point[1] >= HEIGHT or point[1] < 0:
-            reward = -10
+            reward = -100
             game_over = True
 
         if self.frame_iteration > 100 * len(self.positions):
-            reward = -100
+            reward = -200
             game_over = True
 
         return reward, game_over

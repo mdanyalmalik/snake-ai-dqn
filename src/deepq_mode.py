@@ -27,6 +27,7 @@ class Agent:
         self.gamma = 0.9  # discount rate
         self.memory = deque(maxlen=MAX_MEMORY)
         self.model = Linear_QNet(12, 512, 4)
+        self.loaded = False
 
         # load model if it is saved
         model_file_path = '../models'
@@ -34,6 +35,7 @@ class Agent:
         if models:
             self.model.load_state_dict(torch.load(
                 os.path.join(model_file_path, models[0]))['state_dict'])
+            self.loaded = True
 
         self.trainer = QTrainer(self.model, lr=LR, gamma=self.gamma)
 
@@ -95,7 +97,9 @@ class Agent:
         self.trainer.train_step(state, action, reward, next_state, game_over)
 
     def get_action(self, state):
-        self.epsilon = 80 - self.n_games
+        if not self.loaded:
+            self.epsilon = 80 - self.n_games
+
         final_move = [0, 0, 0, 0]
         if random.randint(0, 200) < self.epsilon:
             move = random.randint(0, 3)
