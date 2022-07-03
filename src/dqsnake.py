@@ -1,6 +1,6 @@
 import pygame as pg
 
-from constants import V, WIDTH, HEIGHT, GRID_DIV
+from constants import V, WIDTH, HEIGHT, GRID_DIV, WHITE
 from snake import Snake
 
 
@@ -54,6 +54,11 @@ class DQSnake(Snake):
         if self.food.check_eaten(self):
             reward = 10
         return reward
+
+    def draw_score(self, win, font, game_no, record):
+        text = f'Game: {game_no} Score: {self.score} Record: {record}'
+        self.score_render = font.render(text, False, WHITE)
+        win.blit(self.score_render, (WIDTH-len(text)*7.5, 0))
 
     def reset(self):
         self.vx, self.vy = V, 0

@@ -16,7 +16,7 @@ LR = 0.001
 
 pg.init()
 pg.font.init()
-myfont = pg.font.SysFont('Times New Roman', 30)
+myfont = pg.font.SysFont('Times New Roman', 15)
 
 
 class Agent:
@@ -25,7 +25,7 @@ class Agent:
         self.epsilon = 0  # randomness
         self.gamma = 0.9  # discount rate
         self.memory = deque(maxlen=MAX_MEMORY)
-        self.model = Linear_QNet(12, 256, 4)
+        self.model = Linear_QNet(12, 512, 4)
         self.trainer = QTrainer(self.model, lr=LR, gamma=self.gamma)
 
     def get_state(self, snake):
@@ -86,7 +86,7 @@ class Agent:
         self.trainer.train_step(state, action, reward, next_state, game_over)
 
     def get_action(self, state):
-        self.epsilon = 500 - self.n_games
+        self.epsilon = 80 - self.n_games
         final_move = [0, 0, 0, 0]
         if random.randint(0, 200) < self.epsilon:
             move = random.randint(0, 3)
@@ -101,7 +101,6 @@ class Agent:
 
 
 def train(win):
-    total_score = 0
     record = 0
 
     agent = Agent()
@@ -152,10 +151,10 @@ def train(win):
 
             print('Game', agent.n_games, 'Score',
                   score, 'Record', record)
-            total_score += score
 
         snake.draw(win=win)
-        snake.draw_score(win=win, font=myfont)
+        snake.draw_score(win=win, font=myfont,
+                         game_no=agent.n_games, record=record)
         snake.food_draw(win=win)
 
         # pg.time.delay(10)
