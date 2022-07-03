@@ -27,14 +27,15 @@ class Agent:
         self.gamma = 0.9  # discount rate
         self.memory = deque(maxlen=MAX_MEMORY)
         self.model = Linear_QNet(12, 512, 4)
-        self.trainer = QTrainer(self.model, lr=LR, gamma=self.gamma)
 
         # load model if it is saved
         model_file_path = '../models'
         models = os.listdir(model_file_path)
         if models:
             self.model.load_state_dict(torch.load(
-                os.path.join(model_file_path, models[0])))
+                os.path.join(model_file_path, models[0]))['state_dict'])
+
+        self.trainer = QTrainer(self.model, lr=LR, gamma=self.gamma)
 
     def get_state(self, snake):
         head = snake.head_pos()
@@ -156,7 +157,8 @@ def train(win):
 
             if score > record:
                 record = score
-                agent.model.save(score=score)
+                agent.model.save(
+                    score=score, optimiser=agent.trainer.optimiser)
 
         snake.draw(win=win)
         snake.draw_score(win=win, font=myfont,

@@ -19,9 +19,14 @@ class Linear_QNet(nn.Module):
         x = self.fc2(x)
         return x
 
-    def save(self, score):
+    def save(self, score, optimiser):
         file_name = f'{score}.pth'
         model_folder_path = '../models'
+
+        state = {
+            'state_dict': self.state_dict(),
+            'optimiser': optimiser.state_dict()
+        }
 
         if not os.path.exists(model_folder_path):
             os.makedirs(model_folder_path)
@@ -34,10 +39,10 @@ class Linear_QNet(nn.Module):
                 shutil.rmtree(model_folder_path)
                 os.makedirs(model_folder_path)
                 file_name = os.path.join(model_folder_path, file_name)
-                torch.save(self.state_dict(), file_name)
+                torch.save(state, file_name)
         except:
             file_name = os.path.join(model_folder_path, file_name)
-            torch.save(self.state_dict(), file_name)
+            torch.save(state, file_name)
 
 
 class QTrainer:
@@ -46,6 +51,14 @@ class QTrainer:
         self.gamma = gamma
         self.model = model
         self.optimiser = optim.Adam(model.parameters(), lr=lr)
+
+        # load model if it is saved
+        model_file_path = '../models'
+        models = os.listdir(model_file_path)
+        if models:
+            self.optimiser.load_state_dict(torch.load(
+                os.path.join(model_file_path, models[0]))['optimiser'])
+
         self.criterion = nn.MSELoss()
 
     def train_step(self, state, action, reward, next_state, game_over):
