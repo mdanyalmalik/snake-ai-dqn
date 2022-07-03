@@ -19,6 +19,8 @@ pg.init()
 pg.font.init()
 myfont = pg.font.SysFont('Times New Roman', 15)
 
+device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+
 
 class Agent:
     def __init__(self):
@@ -27,6 +29,7 @@ class Agent:
         self.gamma = 0.9  # discount rate
         self.memory = deque(maxlen=MAX_MEMORY)
         self.model = Linear_QNet(12, 512, 4)
+        self.model = self.model.to(device)
         self.loaded = False
 
         # load model if it is saved
@@ -34,7 +37,7 @@ class Agent:
         models = os.listdir(model_file_path)
         if models:
             self.model.load_state_dict(torch.load(
-                os.path.join(model_file_path, models[0]))['state_dict'])
+                os.path.join(model_file_path, models[0]), map_location=device)['state_dict'])
             self.loaded = True
 
         self.trainer = QTrainer(self.model, lr=LR, gamma=self.gamma)
@@ -105,7 +108,7 @@ class Agent:
             move = random.randint(0, 3)
             final_move[move] = 1
         else:
-            state0 = torch.tensor(state, dtype=torch.float)
+            state0 = torch.tensor(state, dtype=torch.float).to(device)
             prediction = self.model(state0)
             move = torch.argmax(prediction)
             final_move[move] = 1

@@ -6,6 +6,8 @@ import os
 import shutil
 import numpy as np
 
+device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+
 
 class Linear_QNet(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
@@ -57,7 +59,7 @@ class QTrainer:
         models = os.listdir(model_file_path)
         if models:
             self.optimiser.load_state_dict(torch.load(
-                os.path.join(model_file_path, models[0]))['optimiser'])
+                os.path.join(model_file_path, models[0]), map_location=device)['optimiser'])
 
         self.criterion = nn.MSELoss()
 
@@ -74,6 +76,8 @@ class QTrainer:
             reward = torch.unsqueeze(reward, 0)
             game_over = (game_over, )
 
+        state = state.to(device)
+        next_state = next_state.to(device)
         pred = self.model(state)
 
         target = pred.clone()
@@ -83,6 +87,8 @@ class QTrainer:
                 Q_new = reward[i] + self.gamma * \
                     torch.max(self.model(next_state[i]))
             target[i][torch.argmax(action).item()] = Q_new
+
+        target = target.to(device)
 
         self.optimiser.zero_grad()
         loss = self.criterion(target, pred)
