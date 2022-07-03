@@ -4,6 +4,7 @@ import random
 import torch
 import pygame as pg
 from pygame.constants import K_ESCAPE
+import time
 
 from dqsnake import DQSnake
 from constants import SIZE, BLOCK_SIZE, V, WIDTH, HEIGHT
@@ -147,10 +148,7 @@ def train(win):
 
             if score > record:
                 record = score
-                agent.model.save()
-
-            print('Game', agent.n_games, 'Score',
-                  score, 'Record', record)
+                agent.model.save(filename=f'{record}_{time.time()}_model.pth')
 
         snake.draw(win=win)
         snake.draw_score(win=win, font=myfont,
