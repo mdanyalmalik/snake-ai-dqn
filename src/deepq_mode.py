@@ -1,4 +1,5 @@
 from collections import deque
+import os
 import numpy as np
 import random
 import torch
@@ -27,6 +28,13 @@ class Agent:
         self.memory = deque(maxlen=MAX_MEMORY)
         self.model = Linear_QNet(12, 512, 4)
         self.trainer = QTrainer(self.model, lr=LR, gamma=self.gamma)
+
+        # load model if it is saved
+        model_file_path = '../models'
+        models = os.listdir(model_file_path)
+        if models:
+            self.model.load_state_dict(torch.load(
+                os.path.join(model_file_path, models[0])))
 
     def get_state(self, snake):
         head = snake.head_pos()
