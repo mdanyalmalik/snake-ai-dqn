@@ -1,7 +1,6 @@
 from collections import deque
 import numpy as np
 import random
-from sklearn.metrics import SCORERS
 import torch
 import pygame as pg
 from pygame.constants import K_ESCAPE
@@ -87,7 +86,7 @@ class Agent:
         self.trainer.train_step(state, action, reward, next_state, game_over)
 
     def get_action(self, state):
-        self.epsilon = 200 - self.n_games
+        self.epsilon = 500 - self.n_games
         final_move = [0, 0, 0, 0]
         if random.randint(0, 200) < self.epsilon:
             move = random.randint(0, 3)
@@ -97,6 +96,8 @@ class Agent:
             prediction = self.model(state0)
             move = torch.argmax(prediction)
             final_move[move] = 1
+
+        return final_move
 
 
 def train(win):
@@ -124,11 +125,9 @@ def train(win):
 
         final_move = agent.get_action(state_old)
 
-        final_move = [0, 0, 0, 0]
-        final_move[random.randint(0, 3)] = 1
+        snake.move(final_move)
 
         reward = 0
-        snake.move(final_move)
         r1, game_over = snake.check_collision()
         r2 = snake.food_check_eaten()
 
@@ -159,7 +158,7 @@ def train(win):
         snake.draw_score(win=win, font=myfont)
         snake.food_draw(win=win)
 
-        # pg.time.delay(15)
+        # pg.time.delay(10)
         pg.display.update()
 
 
