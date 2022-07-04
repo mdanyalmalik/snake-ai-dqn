@@ -20,10 +20,9 @@ def single_player(win):
             if event.type == pg.QUIT:
                 run = False
                 quit()
-
-        keys = pg.key.get_pressed()
-        if keys[K_ESCAPE]:
-            run = False
+            elif event.type == pg.KEYDOWN:
+                if event.key == K_ESCAPE:
+                    run = False
 
         win.fill(BLACK)
 

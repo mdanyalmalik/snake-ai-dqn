@@ -132,15 +132,14 @@ def train(win):
             if event.type == pg.QUIT:
                 run = False
                 quit()
-
-        keys = pg.key.get_pressed()
-        if keys[K_ESCAPE]:
-            run = False
-        elif keys[K_UP]:
-            delay += delay_inc
-        elif keys[K_DOWN]:
-            if delay > 0:
-                delay -= delay_inc
+            elif event.type == pg.KEYDOWN:
+                if event.key == K_ESCAPE:
+                    run = False
+                elif event.key == K_UP:
+                    delay += delay_inc
+                elif event.key == K_DOWN:
+                    if delay > 0:
+                        delay -= delay_inc
 
         win.fill(BLACK)
 
