@@ -4,7 +4,7 @@ import numpy as np
 import random
 import torch
 import pygame as pg
-from pygame.constants import K_ESCAPE
+from pygame.constants import K_ESCAPE, K_UP, K_DOWN
 
 from dqsnake import DQSnake
 from constants import BLOCK_SIZE, V, WIDTH, HEIGHT
@@ -122,6 +122,9 @@ def train(win):
     agent = Agent()
     snake = DQSnake(WIDTH//2, HEIGHT//2)
 
+    delay = 0
+    delay_inc = 1
+
     run = True
 
     while run:
@@ -133,6 +136,11 @@ def train(win):
         keys = pg.key.get_pressed()
         if keys[K_ESCAPE]:
             run = False
+        elif keys[K_UP]:
+            delay += delay_inc
+        elif keys[K_DOWN]:
+            if delay > 0:
+                delay -= delay_inc
 
         win.fill(BLACK)
 
@@ -168,9 +176,9 @@ def train(win):
                     score=score, optimiser=agent.trainer.optimiser)
 
         snake.draw(win=win)
-        snake.draw_score(win=win, font=myfont,
-                         game_no=agent.n_games, record=record)
+        snake.draw_info(win=win, font=myfont,
+                        game_no=agent.n_games, record=record, delay=delay)
         snake.food_draw(win=win)
 
-        # pg.time.delay(10)
+        pg.time.delay(delay)
         pg.display.update()
