@@ -1,5 +1,6 @@
 import pygame as pg
 import pygame_gui as pg_gui
+from pygame_gui.elements import UIButton, UILabel
 
 from constants import SIZE, WIDTH, HEIGHT
 from constants import BLACK
@@ -10,15 +11,15 @@ clock = pg.time.Clock()
 manager = pg_gui.UIManager(SIZE, '../res/theme.json')
 
 # drawing menu
-sp_button = pg_gui.elements.UIButton(relative_rect=pg.Rect((WIDTH//2-WIDTH//10, HEIGHT//2-HEIGHT//40), (WIDTH//5, HEIGHT//20)),
-                                     text='Single Player',
-                                     manager=manager)
-dqm_button = pg_gui.elements.UIButton(relative_rect=pg.Rect((WIDTH//2-WIDTH//10, HEIGHT//2+HEIGHT//40), (WIDTH//5, HEIGHT//20)),
-                                      text='AI Mode',
-                                      manager=manager)
-title_text = pg_gui.elements.UILabel(relative_rect=pg.Rect((WIDTH//2-WIDTH//4, HEIGHT//3), (WIDTH//2, HEIGHT//10)),
-                                     text='Snake with Self-Learning AI',
-                                     manager=manager)
+sp_button = UIButton(relative_rect=pg.Rect((WIDTH//2-WIDTH//10, HEIGHT//2-HEIGHT//40), (WIDTH//5, HEIGHT//20)),
+                     text='Single Player',
+                     manager=manager)
+dqm_button = UIButton(relative_rect=pg.Rect((WIDTH//2-WIDTH//10, HEIGHT//2+HEIGHT//40), (WIDTH//5, HEIGHT//20)),
+                      text='AI Mode',
+                      manager=manager)
+title_text = UILabel(relative_rect=pg.Rect((WIDTH//2-WIDTH//4, HEIGHT//3), (WIDTH//2, HEIGHT//10)),
+                     text='Snake with Self-Learning AI',
+                     manager=manager)
 
 
 def main_menu(win):
