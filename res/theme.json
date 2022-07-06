@@ -7,6 +7,7 @@
              "hovered_bg":"#35393e",
              "disabled_bg":"#35393e",
              "selected_bg":"#ffffff",
+             "active_bg":"#000000",
              "dark_bg":"#15191e",
              "normal_text":"#ffffff",
              "hovered_text":"#FFFFFF",
@@ -20,7 +21,7 @@
              "hovered_border": "#ffffff",
              "disabled_border": "#808080",
              "selected_border": "#ffffff",
-             "active_border": "#8080B0",
+             "active_border": "#000000",
              "filled_bar":"#f4251b",
              "unfilled_bar":"#CCCCCC"
          }
