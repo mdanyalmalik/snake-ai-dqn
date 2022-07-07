@@ -129,8 +129,6 @@ def train(win):
     agent = Agent()
     snake = DQSnake(WIDTH//2, HEIGHT//2)
 
-    delay = 0
-    delay_inc = 1
     fps = 60
 
     run = True
@@ -182,12 +180,11 @@ def train(win):
 
         snake.draw(win=win)
         snake.draw_info(win=win, font=myfont,
-                        game_no=agent.n_games, record=record, delay=delay)
+                        game_no=agent.n_games, record=record, fps=fps)
         snake.food_draw(win=win)
 
         fps = delay_slider.get_current_value()
         manager.update(time_delta)
         manager.draw_ui(win)
 
-        pg.time.delay(delay)
         pg.display.update()

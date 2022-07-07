@@ -55,8 +55,8 @@ class DQSnake(Snake):
             reward = 10
         return reward
 
-    def draw_info(self, win, font, game_no, record, delay):
-        text = f'Delay: {delay}ms Game: {game_no} Score: {self.score} Record: {record}'
+    def draw_info(self, win, font, game_no, record, fps):
+        text = f'FPS: {fps} Game: {game_no} Score: {self.score} Record: {record}'
         self.score_render = font.render(text, False, WHITE)
         win.blit(self.score_render, (WIDTH-len(text)*7.5, 0))
 
