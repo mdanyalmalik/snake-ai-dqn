@@ -9,6 +9,7 @@ snake1 = Snake(WIDTH//2, HEIGHT//2)
 
 pg.init()
 pg.font.init()
+clock = pg.time.Clock()
 myfont = pg.font.SysFont('Times New Roman', 30)
 
 
@@ -33,5 +34,5 @@ def single_player(win):
         snake1.food_draw(win=win)
         snake1.check_collision()
 
-        pg.time.delay(50)
+        clock.tick(24)
         pg.display.update()
