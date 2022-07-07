@@ -26,7 +26,7 @@ device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 clock = pg.time.Clock()
 manager = UIManager(SIZE, '../res/theme.json')
 delay_slider = UIHorizontalSlider(relative_rect=pg.Rect(
-    0, 0, WIDTH//4, HEIGHT//12), start_value=0, value_range=(0, 50), manager=manager, click_increment=1)
+    0, 0, WIDTH//4, HEIGHT//15), start_value=60, value_range=(30, 1000), manager=manager, click_increment=1)
 
 
 class Agent:
@@ -131,11 +131,12 @@ def train(win):
 
     delay = 0
     delay_inc = 1
+    fps = 60
 
     run = True
 
     while run:
-        time_delta = clock.tick(60)/1000.0
+        time_delta = clock.tick(fps)/1000.0
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 run = False
@@ -184,8 +185,7 @@ def train(win):
                         game_no=agent.n_games, record=record, delay=delay)
         snake.food_draw(win=win)
 
-        delay = delay_slider.get_current_value()
-        print(delay)
+        fps = delay_slider.get_current_value()
         manager.update(time_delta)
         manager.draw_ui(win)
 
