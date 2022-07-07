@@ -5,9 +5,11 @@ import random
 import torch
 import pygame as pg
 from pygame.constants import K_ESCAPE, K_UP, K_DOWN
+from pygame_gui import UIManager
+from pygame_gui.elements import UIHorizontalSlider
 
 from dqsnake import DQSnake
-from constants import BLOCK_SIZE, V, WIDTH, HEIGHT
+from constants import BLOCK_SIZE, V, WIDTH, HEIGHT, SIZE
 from constants import BLACK
 from model import Linear_QNet, QTrainer
 
@@ -20,6 +22,11 @@ pg.font.init()
 myfont = pg.font.SysFont('Times New Roman', 15)
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+
+clock = pg.time.Clock()
+manager = UIManager(SIZE, '../res/theme.json')
+delay_slider = UIHorizontalSlider(relative_rect=pg.Rect(
+    0, 0, WIDTH//4, HEIGHT//12), start_value=0, value_range=(0, 50), manager=manager, click_increment=1)
 
 
 class Agent:
@@ -128,6 +135,7 @@ def train(win):
     run = True
 
     while run:
+        time_delta = clock.tick(60)/1000.0
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 run = False
@@ -135,11 +143,8 @@ def train(win):
             elif event.type == pg.KEYDOWN:
                 if event.key == K_ESCAPE:
                     run = False
-                elif event.key == K_UP:
-                    delay += delay_inc
-                elif event.key == K_DOWN:
-                    if delay > 0:
-                        delay -= delay_inc
+
+            manager.process_events(event)
 
         win.fill(BLACK)
 
@@ -178,6 +183,11 @@ def train(win):
         snake.draw_info(win=win, font=myfont,
                         game_no=agent.n_games, record=record, delay=delay)
         snake.food_draw(win=win)
+
+        delay = delay_slider.get_current_value()
+        print(delay)
+        manager.update(time_delta)
+        manager.draw_ui(win)
 
         pg.time.delay(delay)
         pg.display.update()

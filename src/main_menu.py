@@ -1,5 +1,6 @@
 import pygame as pg
 import pygame_gui as pg_gui
+from pygame_gui import UIManager
 from pygame_gui.elements import UIButton, UILabel
 
 from constants import SIZE, WIDTH, HEIGHT
@@ -8,7 +9,7 @@ from single_player import single_player
 from deepq_mode import train
 
 clock = pg.time.Clock()
-manager = pg_gui.UIManager(SIZE, '../res/theme.json')
+manager = UIManager(SIZE, '../res/theme.json')
 
 # drawing menu
 sp_button = UIButton(relative_rect=pg.Rect((WIDTH//2-WIDTH//10, HEIGHT//2-HEIGHT//40), (WIDTH//5, HEIGHT//20)),
