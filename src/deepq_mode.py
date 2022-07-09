@@ -4,7 +4,7 @@ import numpy as np
 import random
 import torch
 import pygame as pg
-from pygame.constants import K_ESCAPE, K_UP, K_DOWN
+from pygame.constants import K_ESCAPE
 from pygame_gui import UIManager
 from pygame_gui.elements import UIHorizontalSlider
 
@@ -26,7 +26,7 @@ device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 clock = pg.time.Clock()
 manager = UIManager(SIZE, '../res/theme.json')
 delay_slider = UIHorizontalSlider(relative_rect=pg.Rect(
-    0, 0, WIDTH//4, HEIGHT//15), start_value=60, value_range=(30, 1000), manager=manager, click_increment=10)
+    0, 0, WIDTH//6, HEIGHT//20), start_value=60, value_range=(30, 1000), manager=manager, click_increment=10)
 
 
 class Agent:
@@ -37,7 +37,7 @@ class Agent:
         self.memory = deque(maxlen=MAX_MEMORY)
         self.model = Linear_QNet(12, 512, 4)
         self.model = self.model.to(device)
-        self.loaded = False
+        self.loaded = False  # whether model is loaded from file
 
         # load model if it is saved
         model_file_path = '../models'
@@ -179,9 +179,9 @@ def train(win):
                     score=score, optimiser=agent.trainer.optimiser)
 
         snake.draw(win=win)
+        snake.food_draw(win=win)
         snake.draw_info(win=win, font=myfont,
                         game_no=agent.n_games, record=record, fps=fps)
-        snake.food_draw(win=win)
 
         fps = delay_slider.get_current_value()
         manager.update(time_delta)

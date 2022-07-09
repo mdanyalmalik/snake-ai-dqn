@@ -1,10 +1,10 @@
 import pygame as pg
 import pygame_gui as pg_gui
 from pygame_gui import UIManager
-from pygame_gui.elements import UIButton, UILabel
+from pygame_gui.elements import UIButton
 
 from constants import SIZE, WIDTH, HEIGHT
-from constants import BLACK
+from constants import BLACK, WHITE
 from single_player import single_player
 from deepq_mode import train
 
@@ -18,9 +18,13 @@ sp_button = UIButton(relative_rect=pg.Rect((WIDTH//2-WIDTH//10, HEIGHT//2-HEIGHT
 dqm_button = UIButton(relative_rect=pg.Rect((WIDTH//2-WIDTH//10, HEIGHT//2+HEIGHT//40), (WIDTH//5, HEIGHT//20)),
                       text='AI Mode',
                       manager=manager)
-title_text = UILabel(relative_rect=pg.Rect((WIDTH//2-WIDTH//4, HEIGHT//3), (WIDTH//2, HEIGHT//10)),
-                     text='Snake with Self-Learning AI',
-                     manager=manager)
+myfont = pg.font.Font('../res/Exo-Light.ttf', WIDTH//20)
+
+
+def draw_title(win, font):
+    title_render = font.render('Snake with Self-learning AI', False, WHITE)
+    text_width = title_render.get_rect().width
+    win.blit(title_render, (WIDTH//2-text_width//2, HEIGHT//2-HEIGHT//5))
 
 
 def main_menu(win):
@@ -45,5 +49,6 @@ def main_menu(win):
         manager.update(time_delta)
 
         manager.draw_ui(win)
+        draw_title(win=win, font=myfont)
 
         pg.display.update()

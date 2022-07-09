@@ -25,5 +25,22 @@
              "filled_bar":"#f4251b",
              "unfilled_bar":"#CCCCCC"
          }
+     },
+
+     "button":
+     {
+        "font":
+        {
+            "name":"Exo-Light.ttf",
+            "size": 10
+        },
+        "misc":
+        {
+            "state_transitions":
+             {
+                 "normal_hovered": "0.1",
+                 "hovered_normal": "0.5"
+             }
+        }
      }
  }
