@@ -10,7 +10,7 @@ snake1 = Snake(WIDTH//2, HEIGHT//2)
 pg.init()
 pg.font.init()
 clock = pg.time.Clock()
-myfont = pg.font.SysFont('Times New Roman', 30)
+myfont = pg.font.SysFont('Times New Roman', 20)
 
 
 def single_player(win):

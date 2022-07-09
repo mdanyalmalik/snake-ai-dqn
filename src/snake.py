@@ -50,8 +50,9 @@ class Snake:
             pg.draw.rect(win, GREEN, (pos[0], pos[1], BLOCK_SIZE, BLOCK_SIZE))
 
     def draw_score(self, win, font):
-        self.score_render = font.render(str(self.score), False, WHITE)
-        win.blit(self.score_render, (WIDTH-40, 0))
+        self.score_render = font.render(f'Score: {self.score}', False, WHITE)
+        self.text_width = self.score_render.get_rect().width
+        win.blit(self.score_render, (WIDTH-self.text_width-3, 0))
 
     def food_draw(self, win):
         self.food.draw(win=win)
