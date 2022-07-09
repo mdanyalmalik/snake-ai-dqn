@@ -26,7 +26,7 @@ device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 clock = pg.time.Clock()
 manager = UIManager(SIZE, '../res/theme.json')
 delay_slider = UIHorizontalSlider(relative_rect=pg.Rect(
-    WIDTH-WIDTH//6, WIDTH//60, WIDTH//6, HEIGHT//20), start_value=60, value_range=(30, 1000), manager=manager, click_increment=10)
+    WIDTH-WIDTH//6, WIDTH//40, WIDTH//6, HEIGHT//18), start_value=1000, value_range=(30, 1000), manager=manager, click_increment=10)
 
 
 class Agent:
