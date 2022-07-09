@@ -31,8 +31,9 @@
      {
         "font":
         {
-            "name":"Exo-Light.ttf",
-            "size": 10
+            "name":"ExoLight",
+            "size": 15,
+            "regular_path":"../res/Exo-Light.ttf"
         },
         "misc":
         {

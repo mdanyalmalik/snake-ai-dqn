@@ -19,7 +19,7 @@ LR = 0.001
 
 pg.init()
 pg.font.init()
-myfont = pg.font.SysFont('Times New Roman', 15)
+myfont = pg.font.Font('../res/Exo-Light.ttf', WIDTH//60)
 
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
