@@ -4,9 +4,10 @@ import numpy as np
 import random
 import torch
 import pygame as pg
+import pygame_gui as pg_gui
 from pygame.constants import K_ESCAPE
 from pygame_gui import UIManager
-from pygame_gui.elements import UIHorizontalSlider
+from pygame_gui.elements import UIHorizontalSlider, UIButton
 
 from dqsnake import DQSnake
 from constants import BLOCK_SIZE, V, WIDTH, HEIGHT, SIZE
@@ -24,9 +25,14 @@ myfont = pg.font.Font('../res/Exo-Light.ttf', WIDTH//60)
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 clock = pg.time.Clock()
+
 manager = UIManager(SIZE, '../res/theme.json')
+
 delay_slider = UIHorizontalSlider(relative_rect=pg.Rect(
     WIDTH-WIDTH//6, WIDTH//40, WIDTH//6, HEIGHT//18), start_value=1000, value_range=(30, 1000), manager=manager, click_increment=10)
+back_button = UIButton(relative_rect=pg.Rect((0, 0), (WIDTH//10, HEIGHT//20)),
+                       text='Back',
+                       manager=manager)
 
 
 class Agent:
@@ -141,6 +147,9 @@ def train(win):
                 quit()
             elif event.type == pg.KEYDOWN:
                 if event.key == K_ESCAPE:
+                    run = False
+            elif event.type == pg_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == back_button:
                     run = False
 
             manager.process_events(event)
