@@ -1,8 +1,11 @@
 import pygame as pg
+import pygame_gui as pg_gui
 from pygame.constants import K_ESCAPE
+from pygame_gui import UIManager
+from pygame_gui.elements import UIButton
 
 from snake import Snake
-from constants import WIDTH, HEIGHT
+from constants import WIDTH, HEIGHT, SIZE
 from constants import BLACK
 
 snake1 = Snake(WIDTH//2, HEIGHT//2)
@@ -12,11 +15,18 @@ pg.font.init()
 clock = pg.time.Clock()
 myfont = pg.font.Font('../res/Exo-Light.ttf', WIDTH//40)
 
+manager = UIManager(SIZE, '../res/theme.json')
+back_button = UIButton(relative_rect=pg.Rect((0, 0), (WIDTH//10, HEIGHT//20)),
+                       text='Back',
+                       manager=manager)
+
 
 def single_player(win):
     run = True
 
     while run:
+        time_delta = clock.tick(24)
+
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 run = False
@@ -24,6 +34,11 @@ def single_player(win):
             elif event.type == pg.KEYDOWN:
                 if event.key == K_ESCAPE:
                     run = False
+            elif event.type == pg_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == back_button:
+                    run = False
+
+            manager.process_events(event)
 
         win.fill(BLACK)
 
@@ -34,5 +49,7 @@ def single_player(win):
         snake1.food_draw(win=win)
         snake1.check_collision()
 
-        clock.tick(24)
+        manager.update(time_delta)
+        manager.draw_ui(win)
+
         pg.display.update()
