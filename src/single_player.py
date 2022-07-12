@@ -24,7 +24,7 @@ def single_player(win):
     run = True
 
     while run:
-        time_delta = clock.tick(24)
+        time_delta = clock.tick(24)/1000.0
 
         for event in pg.event.get():
             if event.type == pg.QUIT:
