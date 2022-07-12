@@ -1,6 +1,6 @@
 import pygame as pg
 
-from constants import V, WIDTH, HEIGHT, GRID_DIV, WHITE
+from constants import *
 from snake import Snake
 
 

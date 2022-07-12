@@ -2,8 +2,7 @@ import pygame as pg
 from pygame.constants import K_a, K_d, K_s, K_w
 from food import Food
 
-from constants import WIDTH, HEIGHT, GRID_DIV, V, BLOCK_SIZE
-from constants import WHITE, GREEN
+from constants import *
 
 
 class Snake:

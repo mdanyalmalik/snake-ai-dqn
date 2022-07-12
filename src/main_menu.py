@@ -3,12 +3,12 @@ import pygame_gui as pg_gui
 from pygame_gui import UIManager
 from pygame_gui.elements import UIButton
 
-from constants import SIZE, WIDTH, HEIGHT
-from constants import BLACK, WHITE
+from constants import *
 from single_player import single_player
 from deepq_mode import train
 
 clock = pg.time.Clock()
+myfont = pg.font.Font('../res/Exo-Light.ttf', WIDTH//20)
 manager = UIManager(SIZE, '../res/theme.json')
 
 # drawing menu
@@ -18,7 +18,6 @@ sp_button = UIButton(relative_rect=pg.Rect((WIDTH//2-WIDTH//10, HEIGHT//2-HEIGHT
 dqm_button = UIButton(relative_rect=pg.Rect((WIDTH//2-WIDTH//10, HEIGHT//2+HEIGHT//40), (WIDTH//5, HEIGHT//20)),
                       text='AI Mode',
                       manager=manager)
-myfont = pg.font.Font('../res/Exo-Light.ttf', WIDTH//20)
 
 
 def draw_title(win, font):

@@ -10,8 +10,7 @@ from pygame_gui import UIManager
 from pygame_gui.elements import UIHorizontalSlider, UIButton
 
 from dqsnake import DQSnake
-from constants import BLOCK_SIZE, V, WIDTH, HEIGHT, SIZE
-from constants import BLACK
+from constants import *
 from model import Linear_QNet, QTrainer
 
 MAX_MEMORY = 100_000

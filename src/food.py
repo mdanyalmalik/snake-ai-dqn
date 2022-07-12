@@ -1,8 +1,7 @@
 import random
 import pygame as pg
 
-from constants import GRID_DIV, BLOCK_SIZE, BLOCKS_X, BLOCKS_Y
-from constants import RED
+from constants import *
 
 
 class Food:

@@ -1,6 +1,6 @@
 import pygame as pg
 
-from constants import SIZE
+from constants import *
 from main_menu import main_menu
 
 if __name__ == '__main__':

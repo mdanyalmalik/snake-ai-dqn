@@ -5,8 +5,7 @@ from pygame_gui import UIManager
 from pygame_gui.elements import UIButton
 
 from snake import Snake
-from constants import WIDTH, HEIGHT, SIZE
-from constants import BLACK
+from constants import *
 
 snake1 = Snake(WIDTH//2, HEIGHT//2)
 
