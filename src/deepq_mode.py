@@ -28,7 +28,7 @@ clock = pg.time.Clock()
 manager = UIManager(SIZE, '../res/theme.json')
 
 delay_slider = UIHorizontalSlider(relative_rect=pg.Rect(
-    WIDTH-WIDTH//6, WIDTH//40, WIDTH//6, HEIGHT//18), start_value=1000, value_range=(30, 1000), manager=manager, click_increment=10)
+    WIDTH-WIDTH//6, WIDTH//40, WIDTH//6, HEIGHT//18), start_value=500, value_range=(30, 1000), manager=manager, click_increment=10)
 back_button = UIButton(relative_rect=pg.Rect((0, 0), (WIDTH//10, HEIGHT//20)),
                        text='Back',
                        manager=manager)
@@ -134,12 +134,16 @@ def train(win):
     agent = Agent()
     snake = DQSnake(WIDTH//2, HEIGHT//2)
 
-    fps = 60
+    fps = delay_slider.get_current_value()
 
     run = True
 
     while run:
-        time_delta = clock.tick(fps)/1000.0
+        if fps == 1000:
+            time_delta = clock.tick()/1000.0
+        else:
+            time_delta = clock.tick(fps)/1000.0
+
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 run = False
@@ -189,7 +193,7 @@ def train(win):
         snake.draw(win=win)
         snake.food_draw(win=win)
         snake.draw_info(win=win, font=myfont,
-                        game_no=agent.n_games, record=record, fps=fps)
+                        game_no=agent.n_games, record=record, fps=fps, max_fps=1000)
 
         fps = delay_slider.get_current_value()
         manager.update(time_delta)
