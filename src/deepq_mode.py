@@ -9,6 +9,8 @@ from pygame.constants import K_ESCAPE
 from pygame_gui import UIManager
 from pygame_gui.elements import UIHorizontalSlider, UIButton
 
+import time
+
 from dqsnake import DQSnake
 from constants import *
 from model import Linear_QNet, QTrainer
@@ -128,11 +130,13 @@ class Agent:
         return final_move
 
 
-def train(win):
-    record = 0
+agent = Agent()
+snake = DQSnake(WIDTH//2, HEIGHT//2)
+record = 0
 
-    agent = Agent()
-    snake = DQSnake(WIDTH//2, HEIGHT//2)
+
+def train(win):
+    global record
 
     fps = delay_slider.get_current_value()
 
