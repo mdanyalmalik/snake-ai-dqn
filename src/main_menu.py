@@ -18,6 +18,9 @@ sp_button = UIButton(relative_rect=pg.Rect((WIDTH//2-WIDTH//10, HEIGHT//2-HEIGHT
 dqm_button = UIButton(relative_rect=pg.Rect((WIDTH//2-WIDTH//10, HEIGHT//2+HEIGHT//40), (WIDTH//5, HEIGHT//20)),
                       text='AI Mode',
                       manager=manager)
+close_button = UIButton(relative_rect=pg.Rect((WIDTH-WIDTH//10, HEIGHT-HEIGHT//20), (WIDTH//10, HEIGHT//20)),
+                        text='Quit',
+                        manager=manager)
 
 
 def draw_title(win, font):
@@ -40,6 +43,9 @@ def main_menu(win):
                     single_player(win)
                 elif event.ui_element == dqm_button:
                     train(win)
+                elif event.ui_element == close_button:
+                    run = False
+                    quit()
 
             manager.process_events(event)
 
