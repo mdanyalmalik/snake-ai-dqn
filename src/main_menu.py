@@ -6,6 +6,7 @@ from pygame_gui.elements import UIButton
 from constants import *
 from single_player import single_player
 from deepq_mode import train
+from info_page import info_page
 
 clock = pg.time.Clock()
 myfont = pg.font.Font('../res/Exo-Light.ttf', WIDTH//20)
@@ -47,7 +48,7 @@ def main_menu(win):
                 elif event.ui_element == dqm_button:
                     train(win)
                 elif event.ui_element == info_button:
-                    pass
+                    info_page(win)
                 elif event.ui_element == close_button:
                     run = False
                     quit()
