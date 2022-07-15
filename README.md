@@ -2,7 +2,7 @@
 
 ## Description
 
-A snake clone with a self-learning AI that uses reinforcement learning to teach itself the game. This is done via the use of a deep q learning model written using pytorch. Furthermore, there is also a single-player mode to see how well you can do compared to the AI.
+A snake clone with a self-learning AI mode, where the agent makes use of reinforcement learning to teach itself the game. This is done via the use of a deep Q learning model written using pytorch. Furthermore, there is also a single-player mode to see how well you can do compared to the AI.
 
 ## Getting Started
 
