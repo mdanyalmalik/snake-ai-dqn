@@ -13,13 +13,29 @@ back_button = UIButton(relative_rect=pg.Rect((0, 0), (WIDTH//10, HEIGHT//20)),
                        text='Back',
                        manager=manager)
 
-ABOUT = "A snake clone with deep Q learning AI."
+ABOUT = 'A snake clone with a self-learning AI mode, where the agent makes use of reinforcement learning to teach itself the game. This is done via the use of a deep Q learning model written using pytorch. Furthermore, there is also a single-player mode to see how well you can do compared to the AI.'
 
 
 def draw_text(text, pos, win, font):
-    text_render = font.render(text, False, WHITE)
-    text_width = text_render.get_rect().width
-    win.blit(text_render, (pos[0]-text_width//2, pos[1]))
+    CH_PER_LINE = 50
+
+    line, start, stop = 0, 0, 0
+
+    while stop != len(text):
+        start = stop
+        if len(text[start:]) >= CH_PER_LINE:
+            stop += CH_PER_LINE
+            while text[stop] != ' ':
+                stop -= 1
+        else:
+            stop += len(text[start:])
+
+        text_render = font.render(text[start:stop], False, WHITE)
+        text_width = text_render.get_rect().width
+        text_height = text_render.get_rect().height
+        win.blit(text_render, (pos[0]-text_width//2, pos[1]+line*text_height))
+
+        line += 1
 
 
 def info_page(win):
@@ -42,6 +58,6 @@ def info_page(win):
         manager.update(time_delta)
 
         manager.draw_ui(win)
-        draw_text(text=ABOUT, pos=(WIDTH//2, HEIGHT//2), win=win, font=myfont)
+        draw_text(text=ABOUT, pos=(WIDTH//2, HEIGHT//3), win=win, font=myfont)
 
         pg.display.update()
