@@ -55,7 +55,7 @@ def main_menu(win):
 
             manager.process_events(event)
 
-        win.fill(BLACK)
+        win.fill(BACKGROUND)
 
         manager.update(time_delta)
 

@@ -161,7 +161,7 @@ def train(win):
 
             manager.process_events(event)
 
-        win.fill(BLACK)
+        win.fill(BACKGROUND)
 
         state_old = agent.get_state(snake)
 

@@ -39,7 +39,7 @@ def single_player(win):
 
             manager.process_events(event)
 
-        win.fill(BLACK)
+        win.fill(BACKGROUND)
 
         snake1.draw(win=win)
         snake1.move()
