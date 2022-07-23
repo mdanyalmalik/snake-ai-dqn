@@ -9,8 +9,6 @@ from pygame.constants import K_ESCAPE
 from pygame_gui import UIManager
 from pygame_gui.elements import UIHorizontalSlider, UIButton
 
-import time
-
 from dqsnake import DQSnake
 from constants import *
 from model import Linear_QNet, QTrainer
