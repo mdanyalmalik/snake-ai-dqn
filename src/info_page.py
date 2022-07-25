@@ -5,19 +5,22 @@ from pygame_gui.elements import UIButton
 
 from constants import *
 
-clock = pg.time.Clock()
-myfont = pg.font.Font('../res/Exo-Light.ttf', WIDTH//50)
+clock = pg.time.Clock()  # pygame clock object
+myfont = pg.font.Font('../res/Exo-Light.ttf', WIDTH//50)  # font of choice
 
+# setting up and adding components to manager object from pygame gui
 manager = UIManager(SIZE, '../res/theme.json')
 back_button = UIButton(relative_rect=pg.Rect((0, 0), (WIDTH//10, HEIGHT//20)),
                        text='Back',
                        manager=manager)
 
+# text to display
 ABOUT = 'A snake clone with a self-learning AI mode, where the agent makes use of reinforcement learning to teach itself the game. This is done via the use of a deep Q learning model written using pytorch. Furthermore, there is also a single-player mode to see how well you can do compared to the AI.'
 
 
+# custom function to draw text on multiple lines using pygame
 def draw_text(text, pos, win, font):
-    CH_PER_LINE = 50
+    CH_PER_LINE = 50  # (maximum) characters per line
 
     line, start, stop = 0, 0, 0
 
@@ -38,7 +41,7 @@ def draw_text(text, pos, win, font):
         line += 1
 
 
-def info_page(win):
+def info_page(win):  # main loop
     run = True
 
     while run:
