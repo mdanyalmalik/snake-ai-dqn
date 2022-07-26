@@ -6,17 +6,17 @@ from constants import *
 
 
 class Snake:
-    def __init__(self, x, y):
-        self.vx, self.vy = V, 0
+    def __init__(self, x, y):  # takes in initial position of head
+        self.vx, self.vy = V, 0  # initial velocity positive x direction
         self.positions = [(x, y), (x-GRID_DIV, y),
-                          (x-2*GRID_DIV, y)]
+                          (x-2*GRID_DIV, y)]  # setting positions for head and two body pieces
         self.score = 0
         self.food = Food()
 
     def head_pos(self):
         return self.positions[0]
 
-    def move(self):
+    def move(self):  # takes keyboard input and moves snake accordingly
         keys = pg.key.get_pressed()
         if keys[K_w] and not self.vy == V:
             self.vx, self.vy = 0, -V
@@ -35,7 +35,7 @@ class Snake:
         self.positions.insert(0, (new_x, new_y))
         self.positions.pop()
 
-    def check_collision(self):
+    def check_collision(self):  # check collisions and reset if necessary
         head = self.head_pos()
 
         if head in self.positions[2:]:
@@ -44,11 +44,11 @@ class Snake:
         if head[0] >= WIDTH or head[0] < 0 or head[1] >= HEIGHT or head[1] < 0:
             self.reset()
 
-    def draw(self, win):
+    def draw(self, win):  # draw snake to screen
         for pos in self.positions:
             pg.draw.rect(win, GREEN, (pos[0], pos[1], BLOCK_SIZE, BLOCK_SIZE))
 
-    def draw_score(self, win, font):
+    def draw_score(self, win, font):  # display the score (number of times food eaten)
         self.score_render = font.render(f'Score: {self.score} ', False, WHITE)
         self.text_width = self.score_render.get_rect().width
         win.blit(self.score_render, (WIDTH-self.text_width, 0))
@@ -59,7 +59,7 @@ class Snake:
     def food_check_eaten(self):
         self.food.check_eaten(self)
 
-    def reset(self):
+    def reset(self):  # reset snake to original size and 0 score
         self.vx, self.vy = V, 0
         x, y = (WIDTH//2, HEIGHT//2)
         self.positions = [(x, y), (x-GRID_DIV, y),
