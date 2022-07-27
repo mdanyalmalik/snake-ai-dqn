@@ -14,13 +14,14 @@ pg.font.init()
 clock = pg.time.Clock()
 myfont = pg.font.Font('../res/Exo-Light.ttf', WIDTH//40)
 
+# setting up UI manager from pygame gui and adding button
 manager = UIManager(SIZE, '../res/theme.json')
 back_button = UIButton(relative_rect=pg.Rect((0, 0), (WIDTH//10, HEIGHT//20)),
                        text='Back',
                        manager=manager)
 
 
-def single_player(win):
+def single_player(win):  # main loop
     run = True
 
     while run:
