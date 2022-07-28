@@ -9,10 +9,11 @@ import numpy as np
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 
-class Linear_QNet(nn.Module):
+class Linear_QNet(nn.Module):  # neural network class
     def __init__(self, input_size, hidden_size, output_size):
         super().__init__()
 
+        # neural net structure
         self.fc1 = nn.Linear(input_size, hidden_size)
         self.fc2 = nn.Linear(hidden_size, output_size)
 
@@ -33,6 +34,7 @@ class Linear_QNet(nn.Module):
         if not os.path.exists(model_folder_path):
             os.makedirs(model_folder_path)
 
+        # if score is greater than the existing model, replace it w new model
         try:
             models = os.listdir(model_folder_path)
             models = [int(x[:-4]) for x in models]
@@ -47,7 +49,7 @@ class Linear_QNet(nn.Module):
             torch.save(state, file_name)
 
 
-class QTrainer:
+class QTrainer:  # class that handles training model
     def __init__(self, model, lr, gamma):
         self.lr = lr
         self.gamma = gamma
