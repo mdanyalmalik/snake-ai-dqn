@@ -12,7 +12,7 @@ clock = pg.time.Clock()
 myfont = pg.font.Font('../res/Exo-Light.ttf', WIDTH//20)
 manager = UIManager(SIZE, '../res/theme.json')
 
-# drawing menu
+# drawing menu by adding components to manager
 sp_button = UIButton(relative_rect=pg.Rect((WIDTH//2-WIDTH//10, HEIGHT//2-HEIGHT//40), (WIDTH//5, HEIGHT//20)),
                      text='Single Player',
                      manager=manager)
@@ -26,6 +26,8 @@ close_button = UIButton(relative_rect=pg.Rect((WIDTH-WIDTH//10, HEIGHT-HEIGHT//2
                         text='Quit',
                         manager=manager)
 
+# rendering text with pygame.font
+
 
 def draw_title(win, font):
     title_render = font.render('Snake with Self-learning AI', False, WHITE)
@@ -33,7 +35,7 @@ def draw_title(win, font):
     win.blit(title_render, (WIDTH//2-text_width//2, HEIGHT//2-HEIGHT//5))
 
 
-def main_menu(win):
+def main_menu(win):  # main loop
     run = True
 
     while run:
